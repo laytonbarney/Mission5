@@ -1,0 +1,66 @@
+﻿@*Movie Page*@
+
+@{
+    ViewData["Title"] = "My Movies";
+}
+
+@model MovieCollection.Models.MovieDB
+
+@*@section Scripts
+  {
+    <partial name="_ValidationScriptsPartial" />
+}*@
+
+
+<h1>My Movie Collection</h1>
+<br />
+<h2>Fill out this form to add a new movie to my collection.</h2>
+<br />
+<div>
+
+    @*Form which is linked to the model using asp-for=""*@
+    <form method="post">
+        <label asp-for="Title">Title:</label>
+        <input asp-for="Title" required /><br />
+
+        <label asp-for="Year">Year:</label>
+        <input asp-for="Year" required  /><br />
+
+        <label asp-for="DirectorName">Director Name:</label>
+        <input asp-for="DirectorName" required  /><br />
+
+        <label asp-for="Rating">Rating:</label>
+        <select asp-for="Rating" >
+            <option>G</option>
+            <option>PG</option>
+            <option>PG-13</option>
+            <option>R</option>
+        </select><br />
+
+        <label asp-for="CategoryId">Category:</label>
+        <select asp-for="CategoryId">
+            <option value="">Select a Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId">@c.CategoryName</option>
+            }
+        </select><br />
+        
+
+        <label asp-for="Edited">Edited:</label>
+        <select asp-for="Edited">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select><br />
+
+
+        <label asp-for="Lent">Lent:</label>
+        <input asp-for="Lent" /><br />
+
+        <label asp-for="Notes">Notes:</label>
+        <input asp-for="Notes" /><br />
+
+        <button type="submit">Add Movie to Collection</button>
+
+    </form>
+</div>
