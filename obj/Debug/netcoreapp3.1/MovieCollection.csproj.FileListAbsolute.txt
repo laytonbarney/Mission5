@@ -239,3 +239,4 @@
 /Users/layton/Documents/G/Github/Mission5/obj/Debug/netcoreapp3.1/MovieCollection.dll
 /Users/layton/Documents/G/Github/Mission5/obj/Debug/netcoreapp3.1/MovieCollection.pdb
 /Users/layton/Documents/G/Github/Mission5/obj/Debug/netcoreapp3.1/MovieCollection.genruntimeconfig.cache
+/Users/layton/Documents/G/Github/Mission5/obj/Debug/netcoreapp3.1/Razor/Views/Home/Delete.cshtml.g.cs

@@ -14,12 +14,12 @@ namespace MovieCollection.Controllers
     {
 
         //This is added so we can add stuff to the database from our websites
-        private MovieInfoContext dbContext { get; set; }
+        private MovieInfoContext DbContext { get; set; }
 
         //Same as above
         public HomeController(MovieInfoContext someName)
         {
-            dbContext = someName;
+            DbContext = someName;
         }
 
         public IActionResult Index()
@@ -35,7 +35,7 @@ namespace MovieCollection.Controllers
         [HttpGet]
         public IActionResult MyMovies()
         {
-            ViewBag.Categories = dbContext.Categories.ToList();
+            ViewBag.Categories = DbContext.Categories.ToList();
 
             return View();
         }
@@ -43,19 +43,67 @@ namespace MovieCollection.Controllers
         [HttpPost]
         public IActionResult MyMovies(MovieDB stuff)
         {
-            //These two lines allow us to add stuff to the database
-            dbContext.Add(stuff);
-            dbContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                //These two lines allow us to add stuff to the database
+                DbContext.Add(stuff);
+                DbContext.SaveChanges();
 
-            return View("Confirmation", stuff);
+                return View("Confirmation", stuff);
+            }
+            else //if invalid
+            {
+                ViewBag.Categories = DbContext.Categories.ToList();
+
+                return View();
+            }
+            
         }
         [HttpGet]
         public IActionResult MovieList ()
         {
-            var applications = dbContext.Movies
-                .Include(x => x.Category);
+            var applications = DbContext.Movies
+                .Include(x => x.Category)
+                .ToList();
 
             return View(applications);
+        }
+
+        [HttpGet]
+        public IActionResult Edit (int movieid)
+        {
+            ViewBag.Categories = DbContext.Categories.ToList();
+
+            var application = DbContext.Movies.Single(x => x.MovieId == movieid);
+
+            return View("MyMovies", application);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (MovieDB blah)
+        {
+            DbContext.Update(blah);
+            DbContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete (int movieid)
+        {
+            var application = DbContext.Movies.Single(x => x.MovieId == movieid);
+
+            return View(application);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MovieDB stuff)
+        {
+
+            DbContext.Movies.Remove(stuff);
+            DbContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }

@@ -4,19 +4,25 @@
 
 @model List<MovieDB>
 
-<table class="table-bordered table-striped">
-    <thead class="font-weight-bold">
+@*Table Headers*@
+
+<table class="table table-hover">
+    <thead class="thead-dark">
         <tr>
-            <td>Title</td>
-            <td>Year</td>
-            <td>Director Name</td>
-            <td>Rating</td>
-            <td>Category</td>
-            <td>Edited</td>
-            <td>Lent</td>
-            <td>Notes</td>
+            <th scope="col">Title</th>
+            <th scope="col">Year</th>
+            <th scope="col">Director Name</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Category</th>
+            <th scope="col">Edited</th>
+            <th scope="col">Lent</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
+
+@*This is the body of the table*@
 
     <tbody>
         @foreach (var x in Model)
@@ -30,6 +36,9 @@
             <td>@x.Edited</td>
             <td>@x.Lent</td>
             <td>@x.Notes</td>
+
+            <td ><a asp-controller="Home" asp-action="Edit" asp-route-movieid="@x.MovieId" class="btn btn-outline-primary">Edit</a></td>
+            <td><a asp-controller="Home" asp-action="Delete" asp-route-movieid="@x.MovieId" class="btn btn-outline-danger">Delete</a></td>
         </tr>
             }
     </tbody>
